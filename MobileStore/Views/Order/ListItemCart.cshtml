@@ -1,0 +1,59 @@
+﻿@model ICollection<Order>
+@{
+    ViewData["Title"] = "سبد خرید";
+}
+
+<h1>سبد خرید</h1>
+
+<div class="p-5">
+    @if(Model.Any())
+    {
+        
+        var price = 0;
+        
+        @foreach(var item in Model)
+        {
+            int priceItem = item.Product.ProductToShops.First(x => x.ShopId == item.ShopId).Price * item.Count;
+            price = price + priceItem;
+
+            <div class="row border border-2 p-3 mb-5">
+                <div class="col-12 col-lg-4 text-center">
+                    @if (item.Product.Galleries.Count() != 0)
+                    {
+            <img src="/images/products/@item.Product.Galleries.First().ImageFileName" class="img-thumbnail" style="height:300px" />
+                    }
+                    else
+                    {
+            <img src="/images/products/no-image.png" class="img-thumbnail" style="height:300px" />
+                    }
+                    
+                </div>
+                <div class="col-12 col-lg-6 mt-3">
+                    <h4 class="lh-base">@item.Product.Title</h4>
+                    <h5 class="my-5">نام فروشگاه @item.Shop.Name</h5>
+                    <h5>قیمت @item.Product.ProductToShops.First(x=>x.ShopId == item.ShopId).Price تومان</h5>
+                    <h5>تعداد خریداری @item.Count عدد</h5>
+                    <div>
+                        <a asp-controller="Order" asp-action="PlusToCart" class="btn btn-outline-primary px-4 shadow-none my-3" asp-route-shopId="@item.ShopId" asp-route-productId="@item.ProductId">یکی بیشتر</a>
+                        <a asp-controller="Order" asp-action="MinusToCart" class="btn btn-outline-danger px-4 shadow-none my-3" asp-route-shopId="@item.ShopId" asp-route-productId="@item.ProductId">یکی کمتر</a>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-2">
+                    <a asp-controller="Home" asp-action="SingleProduct" class="btn btn-primary px-4 shadow-none my-3" asp-route-id="@item.ProductId">مشاهده</a>
+                    <a asp-controller="Order" asp-action="DeleteToCart" class="btn btn-outline-danger px-4 shadow-none my-3" asp-route-shopId="@item.ShopId" asp-route-productId="@item.ProductId">  حذف </a>
+                </div>
+            </div>
+            
+        }
+
+        <div class="d-flex justify-content-between p-5 bg-warning rounded my-5">
+            <h5>قیمت کل خرید</h5>
+            <h5>@price تومان</h5>
+        </div>
+    }
+    else
+    {
+        <h2 class="border border-2 p-3 mb-5">سبد خرید شما خالی می باشد.</h2>
+    }
+</div>
+

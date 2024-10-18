@@ -1,0 +1,45 @@
+﻿@model RegisterVM
+@{
+    ViewData["Title"] = "ثبت نام";
+}
+
+
+
+
+<div class="col-12 col-md-6  mx-auto">
+    <h3 class="text-center mb-3">ثبت نام</h3>
+    <div class="div-box-shadow-1 p-5 mx-5 mt-3 rounded-3">
+    <form asp-action="Register" method="post">
+        <div class="row">
+            <div class="mb-3 col-12">
+                <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+                <div class="mb-3 col-12">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            <div class="mb-3 col-12">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control text-start">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+                <div class="mb-3 col-12">
+                    <label asp-for="RePassword" class="form-label"></label>
+                    <input asp-for="RePassword" class="form-control text-start">
+                    <span asp-validation-for="RePassword" class="text-danger"></span>
+                </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary shadow-none px-4">ثبت نام</button>
+    </form>
+</div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

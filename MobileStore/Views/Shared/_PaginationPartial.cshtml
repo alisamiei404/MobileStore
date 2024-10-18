@@ -1,0 +1,59 @@
+﻿@if (ViewBag.totalPages > 1)
+{
+    <div class="my-2 py-4 border border-3 rounded">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+
+
+                @if (ViewBag.page == 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link shadow-none" href="?page=@ViewBag.totalPages" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link shadow-none" href="?page=@(ViewBag.page - 1)" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                }
+
+
+                @for (int i = 1; i <= ViewBag.totalPages; i++)
+                {
+                    @if (ViewBag.page != i)
+                    {
+                        <li class="page-item"><a class="page-link shadow-none" href="?page=@i">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item active"><a class="page-link shadow-none" href="?page=@i">@i</a></li>
+                    }
+                }
+
+                @if (ViewBag.page != ViewBag.totalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link shadow-none" href="?page=@(ViewBag.page + 1)" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link shadow-none" href="?page=1" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                }
+
+
+            </ul>
+        </nav>
+    </div>
+}

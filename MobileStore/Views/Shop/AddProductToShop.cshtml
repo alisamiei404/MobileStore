@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "AddProductToShop";
+}
+
+<h3>افزودن قیمت</h3>
+
+<div class="div-box-shadow-1 p-2 p-md-5 mx-md-5 mt-4">
+    <form asp-action="AddProductToShop" method="post">
+        <div class="row">
+            <input name="id" type="hidden" value="@ViewBag.Id">
+            <div class="mb-3 col-12 col-md-6">
+                <label class="form-label"></label>
+                <input name="price" class="form-control">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2">افزودن</button>
+    </form>
+</div>
+

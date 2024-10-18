@@ -1,0 +1,50 @@
+﻿@model ProductVM
+@{
+    ViewData["Title"] = "ویرایش محصول";
+}
+
+<div class="d-flex justify-content-between">
+    <h3>ویرایش محصول</h3>
+    <a asp-area="admin" asp-controller="Product" asp-action="GetAllProduct" class="btn btn-primary"> لیست محصولات </a>
+</div>
+
+<div class="div-box-shadow-1 p-5 mx-5 mt-3">
+    <form asp-action="UpdateProduct" asp-route-id="@Model.Id" method="post">
+        <div class="row">
+            <div class="mb-3 col-6">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="BrandId" class="form-label"></label>
+                <select class="form-control" asp-for="BrandId" asp-items="ViewBag.SelectedList"></select>
+                <span asp-validation-for="BrandId" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="Ram" class="form-label"></label>
+                <input asp-for="Ram" class="form-control">
+                <span asp-validation-for="Ram" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="Hard" class="form-label"></label>
+                <input asp-for="Hard" class="form-control">
+                <span asp-validation-for="Hard" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="Camera" class="form-label"></label>
+                <input asp-for="Camera" class="form-control">
+                <span asp-validation-for="Camera" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary">افزودن</button>
+    </form>
+</div>
+

@@ -1,0 +1,38 @@
+﻿@model LoginVM
+@{
+    ViewData["Title"] = "ورود";
+}
+
+
+
+
+<div class="col-12 col-md-6 mx-auto">
+    <h3 class="text-center mb-3">ورود</h3>
+    <div class="div-box-shadow-1 p-5 mx-5 mt-3 rounded-3">
+        <form asp-action="Login" method="post">
+            <div class="row">
+                <div class="mb-3 col-12">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control shadow-none border-2">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-12">
+                    <label asp-for="Password" class="form-label"></label>
+                    <input asp-for="Password" class="form-control shadow-none border-2 text-start">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-12">
+                    <input asp-for="IsRememberMe" class="form-check-input">
+                    <label class="form-check-label">مرا بخاطر بسپار</label>
+                </div>
+                
+            </div>
+
+            <button type="submit" class="btn btn-primary shadow-none px-4">ورود</button>
+        </form>
+    </div>
+</div>
+
+
+
+

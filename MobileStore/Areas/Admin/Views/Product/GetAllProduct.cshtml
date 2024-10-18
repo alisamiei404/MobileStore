@@ -1,0 +1,54 @@
+﻿@model ICollection<Product>
+@{
+    ViewData["Title"] = "ShowAllProduct";
+}
+
+
+<div class="d-flex justify-content-between">
+    <h3>لیست محصولات</h3>
+    <a asp-area="admin" asp-controller="Product" asp-action="CreateProduct" class="btn btn-primary">افزودن محصول جدید</a>
+</div>
+
+<div class="div-box-shadow-1 p-1 p-lg-5 mx-1 mx-lg-5 mt-3">
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+    <table class="table table-striped text-center table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">عنوان</th>
+                <th scope="col">برند </th>
+                <th scope="col">عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.Title</td>
+                        <td>@item.Brand.Name</td>
+                        <td>
+                            <a asp-controller="Home" asp-action="SingleProduct" class="btn btn-info shadow-none mb-2" asp-route-id="@item.Id"> نمایش</a>
+                            <a asp-controller="Gallery" asp-action="GetAllGallery" class="btn btn-warning shadow-none mb-2" asp-route-id="@item.Id">عکس ها</a>
+                            <a asp-action="ListPriceProduct" class="btn btn-primary shadow-none mb-2" asp-route-id="@item.Id"> لیست قیمت</a>
+                            <a asp-action="UpdateProduct" class="btn btn-warning shadow-none mb-2" asp-route-id="@item.Id">ویرایش</a>
+                            <a asp-action="DeleteProduct" class="btn btn-danger shadow-none mb-2" asp-route-id="@item.Id">حذف</a>
+                        </td>
+                    </tr>
+                }
+            
+        </tbody>
+    </table>
+    </div>
+
+        <partial name="_PaginationPartial" />
+    }
+    else
+    {
+    <h3 class="text-center border border-2 border-info p-5 my-5">آیتمی برای نمایش وجود ندارد!</h3>
+    }
+</div>
+

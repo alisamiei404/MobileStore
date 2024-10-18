@@ -1,0 +1,57 @@
+﻿@model ICollection<User>
+@{
+    ViewData["Title"] = "لیست کاربران";
+}
+
+
+<div class="d-flex justify-content-between">
+    <h3>لیست کاربران</h3>
+</div>
+
+<div class="div-box-shadow-1 p-5 mx-5 mt-3">
+    @if (Model.Any())
+    {
+    <table class="table table-striped text-center table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">نام</th>
+                <th scope="col">ایمیل </th>
+                <th scope="col">سطح</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.Name</td>
+                        <td>@item.Email</td>
+                        <td>
+                            @if (@item.Role == "admin")
+                            {
+                                <button class="btn btn-info text-white">ادمین</button>
+                            }
+                            @if (@item.Role == "seller")
+                            {
+                                <button class="btn btn-info text-white">فروشنده</button>
+                            }
+                            @if (@item.Role == "client")
+                            {
+                                <button class="btn btn-info text-white">مشتری</button>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            
+        </tbody>
+    </table>
+    }
+    else
+    {
+    <h3 class="text-center border border-2 border-info p-5 my-5">آیتمی برای نمایش وجود ندارد!</h3>
+    }
+</div>
+

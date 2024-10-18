@@ -1,0 +1,38 @@
+﻿@model ICollection<ProductToShop>
+@{
+    ViewData["Title"] = "لیست قیمت محصول";
+}
+
+<div class="d-flex justify-content-between">
+    <h3>لیست قیمت محصول</h3>
+    <a asp-area="admin" asp-controller="Product" asp-action="GetAllProduct" class="btn btn-primary"> لیست محصولات </a>
+</div>
+
+<div class="div-box-shadow-1 p-5 mx-5 mt-3">
+    @if (Model.Any())
+    {
+    <table class="table table-striped text-center table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">نام فروشگاه</th>
+                <th scope="col">قیمت </th>
+            </tr>
+        </thead>
+        <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.Shop.Name</th>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            
+        </tbody>
+    </table>
+    }
+    else
+    {
+    <h3 class="text-center border border-2 border-info p-5 my-5">این محصول در حال حاظر ناموجود می باشد.</h3>
+    }
+</div>
+

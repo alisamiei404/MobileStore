@@ -1,0 +1,22 @@
+﻿@model GalleryVM
+@{
+    ViewData["Title"] = "CreateGallery";
+}
+
+<h3>افزودن برند</h3>
+
+<div class="div-box-shadow-1 p-5 mx-5 mt-3">
+    <form asp-asp-controller="Gallery" asp-action="CreateGallery" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <input asp-for="ProductId" type="hidden" class="form-control" value="@ViewBag.id">
+            <div class="mb-3 col-6">
+                <label asp-for="ImageFile" class="form-label"></label>
+                <input asp-for="ImageFile" type="file" class="form-control text-start">
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">افزودن</button>
+    </form>
+</div>
+

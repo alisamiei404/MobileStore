@@ -1,0 +1,45 @@
+﻿@model ICollection<Gallery>
+@{
+    ViewData["Title"] = "ShowAllGallery";
+}
+
+
+<div class="d-flex justify-content-between">
+    <h3>لیست عکس</h3>
+    <a asp-area="admin" asp-controller="Gallery" asp-action="CreateGallery" asp-route-id="@ViewBag.id" class="btn btn-primary">افزودن عکس جدید</a>
+    <a asp-area="admin" asp-controller="Product" asp-action="GetAllProduct" class="btn btn-primary"> لیست محصولات </a>
+</div>
+
+<div class="div-box-shadow-1 p-5 mx-5 mt-3">
+    <div class="col-12">
+        <div class="row">
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="col-4 text-center">
+                        <div>
+                            <img src="/images/products/@item.ImageFileName" width="200" height="150" />
+                        </div>
+                        <div class="text-center mt-3">
+                            <a asp-action="DeleteGallery" class="btn btn-danger" asp-route-id="@item.Id">حذف</a>
+                        </div>
+                        
+                       
+                    </div>
+                }
+            }
+            else
+            {
+                <div>
+                    <h3 class="text-center border border-2 border-info p-5 my-5">برای این محصول هنوز عکسی انتخاب نشده است.</h3>
+                </div>
+            }
+            
+        </div>
+    </div>
+    
+            
+        
+</div>
+

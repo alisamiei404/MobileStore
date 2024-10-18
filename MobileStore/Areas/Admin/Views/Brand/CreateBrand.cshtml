@@ -1,0 +1,31 @@
+﻿@model BrandVM
+@{
+    ViewData["Title"] = "CreateBrand";
+}
+
+<h3>افزودن برند</h3>
+
+<div class="div-box-shadow-1 p-2 p-md-5 mx-md-5 mt-4">
+    <form asp-action="CreateBrand" method="post" enctype ="multipart/form-data">
+        <div class="row">
+            <div class="mb-3 col-12 col-md-6">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-12 col-md-6">
+                <label asp-for="Slug" class="form-label"></label>
+                <input asp-for="Slug" class="form-control text-start">
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-12 col-md-6">
+                <label asp-for="ImageFile" class="form-label"></label>
+                <input asp-for="ImageFile" type="file" class="form-control text-start">
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2">افزودن</button>
+    </form>
+</div>
+

@@ -1,0 +1,42 @@
+﻿@model List<HomeVM>
+@{
+    ViewData["Title"] = "خانه";
+}
+
+<div>
+    <img src="/images/banner-1.jpg" class="img-fluid" alt="hero" />
+</div>
+
+<div class="my-5 py-5">
+    <div class="row justify-content-center">
+        @foreach (var brand in ViewBag.Brands)
+        {
+            <div class="col-6 col-lg-2 mb-3 p-3 p-lg-1">
+                <a asp-area="" asp-controller="Home" asp-action="ShowProductsBrand" asp-route-slug="@brand.Slug" class="list-group-item list-group-item-action">
+                    <img src="/images/brands/@brand.ImageFileName" class="w-100 rounded-circle" height="160" />      
+                    <h5 class="text-center py-2 bg-dark text-white mt-5">@brand.Name</h5>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="col-12 mx-auto">
+    <div class="row">
+        @foreach (var brand in Model)
+        {
+
+            <div class="d-flex justify-content-center mt-5">
+                <h1 class="w-75 text-center border-bottom border-success border-3 pb-2">محصولات برند @brand.Name</h1>   
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-5 gy-2 justify-content-center mb-5">
+                @foreach (var item in brand.Products)
+                {
+                    <partial name="_ItemProduct" model="item" />
+
+                }
+            </div>
+        }
+    </div>
+</div>

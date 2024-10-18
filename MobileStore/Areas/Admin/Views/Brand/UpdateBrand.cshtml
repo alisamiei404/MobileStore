@@ -1,0 +1,55 @@
+﻿@model BrandVM
+@{
+    ViewData["Title"] = "ویرایش برند";
+}
+
+<h1>ویرایش برند</h1>
+
+<div class="div-box-shadow-1 p-5 mx-5 mt-3">
+    <form asp-action="UpdateBrand" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="mb-3 col-6">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="Slug" class="form-label"></label>
+                <input asp-for="Slug" class="form-control text-start">
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <img src="/images/brands/@Model.ImageFileName" alt="@Model.ImageFileName" width="200" height="200" />
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="ImageFile" class="form-label"></label>
+                <input asp-for="ImageFile" type="file" class="form-control text-start">
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 col-6">
+                <label class="form-lable" asp-for="IsActive"></label>
+                <div class="col-md-10">
+                    <div class="radio-single">
+                        <label>
+                            @Html.RadioButtonFor(m => m.IsActive, "true")
+                            <span class="badge badge-pill bg-danger"></span>
+                        </label>
+                        <label>فعال</label>
+                    </div>
+                    <div class="radio-single">
+                        <label>
+                            @Html.RadioButtonFor(m => m.IsActive, "false")
+                            <span class="badge badge-pill bg-primary"></span>
+                        </label>
+                        <label>غیرفعال</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary">ویرایش</button>
+    </form>
+</div>
+

@@ -1,0 +1,195 @@
+﻿@model SingleProductVM
+@using System.Security.Claims;
+
+@{
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) is null ? 0 : int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+}
+
+@{
+    ViewData["Title"] = Model.Product.Title;
+}
+
+<div class="div-box-shadow-1 p-2 p-md-5 mx-md-5 mt-4 mb-5 rounded-3">
+    <div class="row my-5"> 
+
+        <div class="col-12 col-md-5">
+            <div class="mb-3">
+                @if (Model.Product.Galleries.Count() == 1)
+                {
+                    <img src="/images/products/@Model.Product.Galleries.First().ImageFileName" style="height: 380px" />
+                }
+
+                @if (Model.Product.Galleries.Count() == 0)
+                {
+                    <img src="/images/products/no-image.png" class="w-100" style="height: 380px" />
+                }
+
+                @if (Model.Product.Galleries.Count() > 1)
+                {
+                    <img id="my_image" src="/images/products/@Model.Product.Galleries.First().ImageFileName" class="w-100" style="height: 380px" />
+                }
+
+            </div>
+            <div>
+                <div class="row g-1 justify-content-center">
+
+                    @if (Model.Product.Galleries.Count() > 1)
+                {
+                        var o = 0;
+                        @foreach (var item in Model.Product.Galleries)
+                    {
+                            <div class="col-4" onclick='ali("/images/products/@item.ImageFileName")'>
+                                <img src="/images/products/@item.ImageFileName" class="object-fit-cover border rounded w-100" style="height: 150px" />
+                            </div>
+
+                            if(o==2)
+                            {
+                                break;
+                            }
+                            o++;
+                        }
+
+                }
+                </div>
+            </div> 
+        </div>
+
+        <div class="col-12 col-md-7">
+            <h2 class="lh-base mt-3 mb-5">@Model.Product.Title</h2>
+
+            <h5 class="bg-secondary text-white d-inline-block ps-5 pe-2 py-2 my-2">مقدار رم @Model.Product.Ram گیگ</h5>
+            <br/>
+            <h5 class="bg-secondary text-white d-inline-block ps-5 pe-2 py-2 my-2">مقدار هارد @Model.Product.Hard گیگ</h5>
+            <br />
+            <h5 class="bg-secondary text-white d-inline-block ps-5 pe-2 py-2 my-2">مقدار دوربین @Model.Product.Camera مگاپیکسل</h5>
+            <br />
+            
+        </div>
+    </div>
+    
+    <div class="mt-5 pt-5">
+        @if (Model.Product.ProductToShops.Any())
+        {
+
+            @foreach (var item in Model.Product.ProductToShops)
+            {
+                <div class="d-flex justify-content-between border border-3 px-3 py-3 my-3">
+                    <div>
+                        <h4>فروشگاه @item.Shop.Name</h4>
+                        <h5 class="mt-3">قیمت @item.Price تومان</h5>
+                    </div>
+
+                    <div>
+                        <a asp-controller="Order" asp-action="AddToCart" class="btn btn-outline-primary px-4 shadow-none" asp-route-shopId="@item.ShopId" asp-route-productId="@item.ProductId">افزودن به سبد خرید</a>
+                        
+                    </div>
+                </div>
+
+            }
+        }
+        else
+        {
+            <div class="border border-3 px-3 py-3 my-3">
+                <h3>این محصول در حال حاظر نامومجود می باشد.</h3>
+            </div>
+        }
+    </div>
+
+    <div class="col-12 col-md-10 col-lg-8  mx-auto mt-5">
+        <div class="div-box-shadow-1 p-2 p-md-5 mx-1 mx-md-5 mt-3">
+            <p>نظر خود را در مورد این محصول بنویسید</p>
+            <form asp-action="SingleProduct" method="post">
+                <div class="row">
+                    <div class="mb-3 col-12">
+                        <label class="form-label">متن نظر</label>
+                        <textarea asp-for="Comment.Content" class="form-control shadow-none border-2" style="resize: none;"></textarea>
+                        <span asp-validation-for="Comment.Content" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary shadow-none">ارسال</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="my-5">
+        <h2 class="mb-3">لیست نظرات</h2>
+        
+        @if (Model.Product.Comments.Any())
+        {
+            @foreach (var item in Model.Product.Comments)
+            {
+
+                @if (!item.IsActive)
+                {
+                    if (item.User.Id == userId)
+                    {
+                        <div class="border border-2 my-5 p-2 rounded-3">
+                            <p>نظر شما بعد از تایید ادمین  قرار خواهد گرفت.</p>
+                            <h5 class="my-2 py-3 border-bottom lh-base">@item.Content</h5>
+                            <div class="d-flex justify-content-between mt-4">
+                                <h4>@item.User.Name</h4>
+                                <a asp-action="DeleteComment" class="btn btn-danger px-4 shadow-none" asp-route-id="@item.Id">حذف</a>
+                            </div>
+                            
+                            <h5>@PersianDate.ToShamsiDate(item.CreatedAt)</h5>
+                        </div>
+
+                    }
+                }
+                else
+                {
+                    <div class="border border-2 my-5 p-2 rounded-3">
+                        <h5 class="my-2 py-3 border-bottom">@item.Content</h5>
+                        <div class="d-flex justify-content-between mt-4">
+                            <h4>@item.User.Name</h4>
+                            @if (item.User.Id == userId)
+                            {
+                                <a asp-action="DeleteComment" class="btn btn-danger px-4 shadow-none" asp-route-id="@item.Id">حذف</a>
+                            }
+                        </div>
+                    </div>
+                }
+
+            }
+        }
+        else
+        {
+            <div class="border border-2 my-5 p-2 rounded-3">
+                <p class="fs-5">نظری هنوز ثبت نشده است.</p>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        function ali(i){
+            $("#my_image").attr("src", i);
+        }
+
+        function aaa(a) {
+            console.log(a);
+            var p = @Model;
+            console.log(p);
+            /*let string = JSON.stringify(a)
+            let retArray = JSON.parse(a)
+            console.log(a);
+
+
+            localStorage.setItem("key12", string)
+            var a = $('#bspan').html();
+            console.log(a);
+            a++;
+            $('#bspan').html(a);*/
+            
+        }
+
+        
+        
+        
+    </script>
+}

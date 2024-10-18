@@ -1,0 +1,97 @@
+﻿@using System.Security.Claims;
+@{
+    var name = User.Identity!.Name;
+}
+<header class="shadow-sm bd-navbar sticky-top">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white mb-4 py-2">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-4" asp-area="" asp-controller="Home" asp-action="Index">موبایل 404</a>
+            <button class="navbar-toggler bg-white shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="sidebar offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">موبایل 404</h5>
+                    <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body d-flex flex-column flex-lg-row p-4 p-lg-0">
+                    <ul class="navbar-nav justify-content-center align-items-center fs-5 flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">صفحه اصلی</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ShowProducts">محصولات</a>
+                        </li>
+
+                        @await Component.InvokeAsync("BrandsComponent")
+
+
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    عملیات
+                                </a>
+                                <ul class="dropdown-menu text-end p-1">
+                                    @if (User.IsInRole("admin") || User.IsInRole("seller"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Shop" asp-action="GetProductMyShop">محصولات فروشگاه</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Shop" asp-action="DeleteShop">حذف فروشگاه</a>
+                                        </li>
+                                    }
+
+                                    @if (User.IsInRole("client"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Shop" asp-action="CreateShop">افزودن فروشگاه</a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </li>
+
+                        }
+
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="admin" asp-controller="Product" asp-action="GetAllProduct">بخش ادمین</a>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="navbar-nav d-flex align-items-center pe-1">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary shadow-none" asp-area="" asp-controller="Order" asp-action="ListItemCart">سبد خرید <span class="badge text-bg-secondary" id="cart-item">0</span></a>
+                        </li>
+                        
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link">@name</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout">خروج</a>
+                            </li>
+
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">ثبت نام</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">ورود</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

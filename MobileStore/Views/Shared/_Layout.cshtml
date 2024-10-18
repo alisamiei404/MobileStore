@@ -1,0 +1,74 @@
+﻿
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>موبایل404 - @ViewData["Title"]</title>
+    <link rel="icon" href="/images/icon.png" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Mobile404MVC.styles.css" asp-append-version="true" />
+</head>
+<body>
+    
+    <div>
+        @if (TempData["success"] != null)
+        {
+            <h3 class="bg-success text-white text-center py-3 position-fixed fixed-top" id="messageTopFixed">
+                @TempData["success"]
+            </h3>
+        }
+
+        @if (TempData["error"] != null)
+        {
+            <h3 class="bg-danger text-white text-center py-3 position-fixed fixed-top" id="messageTopFixed">
+                @TempData["error"]
+            </h3>
+        }
+
+        @if (TempData["info"] != null)
+        {
+            <h3 class="bg-info text-white text-center py-3 position-fixed fixed-top" id="messageTopFixed">
+                @TempData["info"]
+            </h3>
+        }
+
+        <partial name="_Header" />
+
+        <div class="container min-vh-100 my-5">
+            <main role="main" class="pb-3 my-5">
+                @RenderBody()
+            </main>
+        </div>
+
+
+        <partial name="_Footer" />
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <partial name="_ValidationScriptsPartial" />
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $("#messageTopFixed").show().delay(1000).fadeOut();
+
+        if ('@ViewData["gg"]')
+        {
+            var t = '@ViewData["gg"]'
+            $('#cart-item').html(t);
+            localStorage.setItem('cart-count', t)
+        }
+        else
+        {
+            var y = localStorage.getItem('cart-count')
+            $('#cart-item').html(y);
+            if(y==null)
+            {
+                localStorage.setItem('cart-count', 0)
+            }
+        }
+    </script>
+</body>
+</html>

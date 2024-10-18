@@ -1,0 +1,37 @@
+﻿@model List<ShowProductsVM>
+@{
+    ViewData["Title"] = "ShowAllProduct";
+}
+
+
+<div class="d-flex justify-content-between">
+    <h3>لیست محصولات برند @ViewData["brand"]</h3>
+</div>
+
+
+
+@if (Model.Any())
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5 py-5 justify-content-center">
+        @foreach (var item in Model)
+        {
+            <partial name="_ItemProduct" model="item" />
+
+        }
+
+        
+    </div>
+    
+
+        <partial name="_PaginationPartial" />
+    
+}
+else
+{
+    <div class="my-5 py-3 border-start border-bottom border-3">
+        <h3>هیچ محصولی برای نمایش وجود ندارد</h3>
+    </div>
+}
+
+
+

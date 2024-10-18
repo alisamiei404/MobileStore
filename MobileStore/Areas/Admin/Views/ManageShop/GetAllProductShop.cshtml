@@ -1,0 +1,48 @@
+﻿@model ICollection<Product>
+@{
+    ViewData["Title"] = "لیست محصولات";
+}
+
+
+<div class="d-flex justify-content-between">
+    <h3>لیست محصولات @ViewBag.shop.Name</h3>
+    <a asp-area="admin" asp-controller="ManageShop" asp-action="GetAllShop" class="btn btn-primary">  لیست فروشگاه ها</a>
+</div>
+
+<div class="div-box-shadow-1 p-5 mx-5 mt-3">
+    @if (Model.Any())
+    {
+    <table class="table table-striped text-center table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">عنوان</th>
+                <th scope="col">برند </th>
+                <th scope="col">قیمت </th>
+                <th scope="col">نمایش</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.Title</td>
+                        <td>@item.Brand.Name</td>
+                        <td>@item.ProductToShops.First(x => x.ShopId == @ViewBag.shop.Id).Price</td>
+                        <td>
+                            <a asp-controller="Home" asp-action="SingleProduct" class="btn btn-info shadow-none mb-2" asp-route-id="@item.Id"> نمایش</a>
+                        </td>
+                    </tr>
+                }
+            
+        </tbody>
+    </table>
+    }
+    else
+    {
+    <h3 class="text-center border border-2 border-info p-5 my-5">لیست محصولات فروشگاه خالی می باشد.</h3>
+    }
+</div>
+
